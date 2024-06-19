@@ -1,4 +1,4 @@
-import { Htag, Button } from "../components";
+import { Htag, Button, P } from "../components";
 
 export default function Home() {
 	return (
@@ -10,6 +10,9 @@ export default function Home() {
 			<Button appearance="ghost" arrow="down">
 				Button
 			</Button>
+			<P size="s">Text</P>
+			<P>Text</P>
+			<P size="l">Text</P>
 		</>
 	);
 }

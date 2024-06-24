@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Htag, Button, P, Tag, Rating } from "../components";
+import { Htag, Button, P, Tag, Rating } from "../../components";
 
 export default function Home() {
 	const [rating, setRating] = useState<number>(4);

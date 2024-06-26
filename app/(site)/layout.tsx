@@ -22,12 +22,12 @@ export default function RootLayout({
 	return (
 		<html lang="ru" className={noto_sans.className}>
 			<body>
-				<Header />
-				<div>
-					<Sidebar />
-					<div>{children}</div>
+				<div className="wrapper">
+					<Header className="header" />
+					<Sidebar className="sidebar" />
+					<div className="main-content">{children}</div>
+					<Footer className="footer" />
 				</div>
-				<Footer />
 			</body>
 		</html>
 	);

@@ -1,10 +1,14 @@
-"use client";
+// "use client";
 
-import { useState } from "react";
+// import { useState } from "react";
 import { Htag, Button, P, Tag, Rating } from "../../components";
+import { getMenu } from "@/api/menu";
 
-export default function Home() {
-	const [rating, setRating] = useState<number>(4);
+const firstCategory = 0;
+
+export default async function Home() {
+	// const [rating, setRating] = useState<number>(4);
+	const menu = await getMenu(firstCategory);
 	return (
 		<>
 			<Htag tag="h1">Text</Htag>
@@ -40,7 +44,13 @@ export default function Home() {
 				Test
 			</Tag>
 
-			<Rating rating={rating} setRating={setRating} isEditable />
+			{/* <Rating rating={4} setRating={() => {}} isEditable /> */}
+
+			<ul>
+				{menu.map((m) => (
+					<li key={m._id.secondCategory}>{m._id.secondCategory}</li>
+				))}
+			</ul>
 		</>
 	);
 }

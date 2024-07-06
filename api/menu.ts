@@ -7,5 +7,9 @@ export async function getMenu(firstCategory: number): Promise<MenuItem[]> {
 		body: JSON.stringify({ firstCategory }),
 		headers: new Headers({ "content-type": "application/json" }),
 	});
-	return res.json();
+	const menu = (await res.json()) as MenuItem[];
+	return menu.map((m) => ({
+		...m,
+		isOpened: false,
+	}));
 }

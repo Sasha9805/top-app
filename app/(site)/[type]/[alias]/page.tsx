@@ -3,6 +3,7 @@ import { getPage } from "@/api/page";
 import { getProducts } from "@/api/products";
 import { firstLevelMenu } from "@/helpers/helpers";
 import { notFound } from "next/navigation";
+import { TopPageComponent } from "./components/TopPageComponent/TopPageComponent";
 
 interface IPath {
 	type: string;
@@ -25,15 +26,28 @@ export async function generateStaticParams() {
 	return paths;
 }
 
-export default async function Course({
+export default async function TopPage({
 	params,
 }: {
-	params: { alias: string };
+	params: { alias: string; type: string };
 }) {
+	const firstCategoryItem = firstLevelMenu.find(
+		(m) => m.route === params.type
+	);
+	if (!firstCategoryItem) {
+		notFound();
+	}
 	const page = await getPage(params.alias);
 	if (!page) {
 		notFound();
 	}
 	const products = await getProducts(page.category);
-	return <>{products && products.length}</>;
+
+	return (
+		<TopPageComponent
+			page={page}
+			products={products}
+			firstCategory={firstCategoryItem.id}
+		/>
+	);
 }

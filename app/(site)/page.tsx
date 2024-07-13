@@ -1,7 +1,7 @@
 // "use client";
 
 // import { useState } from "react";
-import { Htag, Button, P, Tag, Rating } from "../../components";
+import { Htag, Button, P, Tag, Rating, Input, Textarea } from "../../components";
 import { getMenu } from "@/api/menu";
 
 const firstCategory = 0;
@@ -45,6 +45,9 @@ export default async function Home() {
 			</Tag>
 
 			{/* <Rating rating={4} setRating={() => {}} isEditable /> */}
+
+			<Input placeholder="Test" />
+			<Textarea placeholder="Test" />
 		</>
 	);
 }

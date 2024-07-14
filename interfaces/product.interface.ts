@@ -20,7 +20,7 @@ export interface ProductModel {
 	link: string;
 	price: number;
 	credit: number;
-	oldPrice: number;
+	oldPrice?: number;
 	description: string;
 	characteristics: ProductCharacteristic[];
 	createdAt: Date;

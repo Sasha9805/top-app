@@ -30,6 +30,15 @@ const nextConfig = {
 		return config;
 	},
 	reactStrictMode: true,
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "old-images.hb.ru-msk.vkcs.cloud",
+				port: "",
+			},
+		],
+	},
 };
 // const nextConfig = {
 //   reactStrictMode: true,

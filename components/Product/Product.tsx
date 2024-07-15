@@ -1,13 +1,21 @@
 import styles from "./Product.module.css";
 import { ProductProps } from "./Product.props";
 import { Button, Card, Divider, Rating, Tag } from "..";
-import { priceRu } from "@/helpers/helpers";
+import { declOfNum, priceRu } from "@/helpers/helpers";
+import Image from "next/image";
+import cn from "classnames";
 
 export const Product = ({ product, className, ...props }: ProductProps) => {
 	return (
 		<Card className={styles.product}>
 			<div className={styles.logo}>
-				<img src={product.image} alt={product.title} />
+				<Image
+					src={product.image}
+					alt={product.title}
+					width={70}
+					height={70}
+				/>
+				{/* <img src={product.image} alt={product.title} /> */}
 			</div>
 			<div className={styles.title}>{product.title}</div>
 			<div className={styles.price}>
@@ -35,11 +43,24 @@ export const Product = ({ product, className, ...props }: ProductProps) => {
 			<div className={styles.priceTitle}>цена</div>
 			<div className={styles.creditTitle}>в кредит</div>
 			<div className={styles.ratingTitle}>
-				{product.reviewCount} отзывов
+				{product.reviewCount}{" "}
+				{declOfNum(product.reviewCount, ["отзыв", "отзыва", "отзывов"])}
 			</div>
-			<Divider className={styles.hr} />
+			<Divider className={cn(styles.hr, styles.hr2)} />
 			<div className={styles.description}>{product.description}</div>
-			<div className={styles.features}>фичи</div>
+			<div className={styles.features}>
+				{product.characteristics.map((c) => (
+					<div key={c.name} className={styles.characteristics}>
+						<span className={styles.characteristicsName}>
+							{c.name}
+						</span>
+						<span className={styles.characteristicsDots}></span>
+						<span className={styles.characteristicsValue}>
+							{c.value}
+						</span>
+					</div>
+				))}
+			</div>
 			<div className={styles.advBlock}>
 				{product.advantages && (
 					<div className={styles.advantages}>

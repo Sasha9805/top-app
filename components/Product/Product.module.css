@@ -32,7 +32,6 @@
 .rating,
 .ratingTitle {
 	grid-column: ratingStart / end;
-	white-space: nowrap;
 }
 
 .hr,
@@ -234,6 +233,10 @@
 	.actions {
 		grid-area: actions;
 	}
+
+	.characteristics {
+		padding-right: 0;
+	}
 }
 
 @media screen and (max-width: 640px) {
@@ -279,9 +282,5 @@
 			"advBlock"
 			"hr2"
 			"actions";
-	}
-
-	.characteristics {
-		padding-right: 0;
 	}
 }

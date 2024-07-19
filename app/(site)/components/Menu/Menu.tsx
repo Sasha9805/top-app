@@ -13,6 +13,7 @@ import Link from "next/link";
 import { firstLevelMenu } from "@/helpers/helpers";
 import { getMenu } from "@/api/menu";
 import { TopLevelCategory } from "@/interfaces/page.interface";
+import { motion } from "framer-motion";
 
 export default function Menu() {
 	const pathname = usePathname();
@@ -31,6 +32,30 @@ export default function Menu() {
 		}
 		return firstLevelItem.id;
 	}, [pathname]);
+
+	const variants = {
+		visible: {
+			marginBottom: 20,
+			transition: {
+				when: "beforeChildren",
+				staggerChildren: 0.1,
+			},
+		},
+		hidden: {
+			marginBottom: 0,
+		},
+	};
+
+	const variantsChildren = {
+		visible: {
+			opacity: 1,
+			height: 29,
+		},
+		hidden: {
+			opacity: 0,
+			height: 0,
+		},
+	};
 
 	useEffect(() => {
 		if (firstCategory === null) {
@@ -129,16 +154,18 @@ export default function Menu() {
 							>
 								{m._id.secondCategory}
 							</div>
-							<div
-								className={cn(styles.secondLevelBlock, {
-									[styles.secondLevelBlockOpened]: m.isOpened,
-								})}
+							<motion.div
+								layout
+								variants={variants}
+								initial={m.isOpened ? "visible" : "hidden"}
+								animate={m.isOpened ? "visible" : "hidden"}
+								className={cn(styles.secondLevelBlock)}
 							>
 								{buildThirdLevel(
 									m.pages,
 									firstLevelMenuItem.route
 								)}
-							</div>
+							</motion.div>
 						</div>
 					);
 				})}
@@ -151,15 +178,16 @@ export default function Menu() {
 			const currentHref = `/${route}/${p.alias}`;
 			const isActive = currentHref === pathname;
 			return (
-				<Link
-					key={p._id}
-					href={currentHref}
-					className={cn(styles.thirdLevel, {
-						[styles.thirdLevelActive]: isActive,
-					})}
-				>
-					{p.category}
-				</Link>
+				<motion.div key={p._id} variants={variantsChildren}>
+					<Link
+						href={currentHref}
+						className={cn(styles.thirdLevel, {
+							[styles.thirdLevelActive]: isActive,
+						})}
+					>
+						{p.category}
+					</Link>
+				</motion.div>
 			);
 		});
 	};

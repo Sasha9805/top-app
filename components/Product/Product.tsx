@@ -34,7 +34,11 @@ export const Product = motion(
 			};
 
 			return (
-				<div ref={ref} className={className} {...props}>
+				<div
+					ref={ref}
+					className={cn(styles.wrapper, className)}
+					{...props}
+				>
 					<Card className={styles.product}>
 						<div className={styles.logo}>
 							<Image

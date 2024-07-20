@@ -1,10 +1,10 @@
 "use client";
 
 import styles from "./Up.module.css";
-import UpIcon from "./up.svg";
 import { motion, useAnimation } from "framer-motion";
 import { useScrollY } from "@/hooks/useScrollY";
 import { useEffect } from "react";
+import { ButtonIcon } from "..";
 
 export const Up = () => {
 	const controls = useAnimation();
@@ -22,13 +22,12 @@ export const Up = () => {
 	};
 
 	return (
-		<motion.button
+		<motion.div
 			initial={{ opacity: 0 }}
 			animate={controls}
 			className={styles.up}
-			onClick={scrollToTop}
 		>
-			<UpIcon />
-		</motion.button>
+			<ButtonIcon appearance="primary" icon="up" onClick={scrollToTop} />
+		</motion.div>
 	);
 };

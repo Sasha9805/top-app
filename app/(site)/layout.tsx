@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "./components/Header/Header";
 import { Footer } from "./components/Footer/Footer";
 import { Sidebar } from "./components/Sidebar/Sidebar";
+import { Up } from "../../components";
 
 const noto_sans = Noto_Sans({
 	subsets: ["cyrillic"],
@@ -27,6 +28,7 @@ export default function RootLayout({
 					<Sidebar className="sidebar" />
 					<div className="main-content">{children}</div>
 					<Footer className="footer" />
+					<Up />
 				</div>
 			</body>
 		</html>

@@ -46,7 +46,6 @@ a {
 
 .header {
 	grid-area: header;
-	display: none;
 }
 
 .main-content {
@@ -72,10 +71,6 @@ a {
 
 	.sidebar {
 		display: none !important;
-	}
-
-	.header {
-		display: block;
 	}
 
 	.main-content {

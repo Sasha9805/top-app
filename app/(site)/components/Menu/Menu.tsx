@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, KeyboardEvent } from "react";
 import { usePathname } from "next/navigation";
 import {
 	FirstLevelMenuItem,
@@ -110,6 +110,17 @@ export default function Menu() {
 		setMenuState(newMenu);
 	};
 
+	const openSecondLevelKey = (
+		e: KeyboardEvent,
+		secondCategory: string,
+		isOpenedMainCategory: boolean
+	) => {
+		if (e.code === "Enter" || e.code === "Space") {
+			e.preventDefault();
+			openSecondLevel(secondCategory, isOpenedMainCategory);
+		}
+	};
+
 	const buildFirstLevel = () => {
 		return (
 			<>
@@ -144,9 +155,17 @@ export default function Menu() {
 					return (
 						<div key={m._id.secondCategory}>
 							<div
+								tabIndex={0}
 								className={styles.secondLevel}
 								onClick={() =>
 									openSecondLevel(
+										m._id.secondCategory,
+										aliases.includes(pathNameAlias)
+									)
+								}
+								onKeyDown={(e: KeyboardEvent) =>
+									openSecondLevelKey(
+										e,
 										m._id.secondCategory,
 										aliases.includes(pathNameAlias)
 									)
@@ -163,7 +182,8 @@ export default function Menu() {
 							>
 								{buildThirdLevel(
 									m.pages,
-									firstLevelMenuItem.route
+									firstLevelMenuItem.route,
+									m.isOpened ?? false
 								)}
 							</motion.div>
 						</div>
@@ -173,13 +193,18 @@ export default function Menu() {
 		);
 	};
 
-	const buildThirdLevel = (pages: PageItem[], route: string) => {
+	const buildThirdLevel = (
+		pages: PageItem[],
+		route: string,
+		isOpened: boolean
+	) => {
 		return pages.map((p) => {
 			const currentHref = `/${route}/${p.alias}`;
 			const isActive = currentHref === pathname;
 			return (
 				<motion.div key={p._id} variants={variantsChildren}>
 					<Link
+						tabIndex={isOpened ? 0 : -1}
 						href={currentHref}
 						className={cn(styles.thirdLevel, {
 							[styles.thirdLevelActive]: isActive,

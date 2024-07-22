@@ -49,7 +49,7 @@ export default function Menu() {
 	const variantsChildren = {
 		visible: {
 			opacity: 1,
-			height: 29,
+			height: "auto",
 		},
 		hidden: {
 			opacity: 0,

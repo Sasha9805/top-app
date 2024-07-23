@@ -8,7 +8,7 @@ import { declOfNum, priceRu } from "@/helpers/helpers";
 import Image from "next/image";
 import cn from "classnames";
 import { useState, useRef, forwardRef, ForwardedRef, Fragment } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimationDefinition } from "framer-motion";
 
 export const Product = motion(
 	forwardRef(
@@ -27,10 +27,16 @@ export const Product = motion(
 
 			const scrollToReview = () => {
 				setIsReviewOpened(true);
-				reviewRef.current?.scrollIntoView({
-					behavior: "smooth",
-					block: "start",
-				});
+				reviewRef.current?.focus();
+			};
+
+			const onAnimationComplete = (definition: AnimationDefinition) => {
+				if (definition === "visible") {
+					reviewRef.current?.scrollIntoView({
+						behavior: "smooth",
+						block: "start",
+					});
+				}
 			};
 
 			return (
@@ -157,11 +163,13 @@ export const Product = motion(
 						animate={isReviewOpened ? "visible" : "hidden"}
 						initial="hidden"
 						variants={variants}
+						onAnimationComplete={onAnimationComplete}
 					>
 						<Card
 							ref={reviewRef}
 							color="blue"
 							className={cn(styles.reviews)}
+							tabIndex={isReviewOpened ? 0 : -1}
 						>
 							{product.reviews.map((r) => (
 								<Fragment key={r._id}>
@@ -169,7 +177,10 @@ export const Product = motion(
 									<Divider />
 								</Fragment>
 							))}
-							<ReviewForm productId={product._id} />
+							<ReviewForm
+								productId={product._id}
+								isOpened={isReviewOpened}
+							/>
 						</Card>
 					</motion.div>
 				</div>

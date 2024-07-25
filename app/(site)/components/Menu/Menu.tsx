@@ -217,5 +217,9 @@ export default function Menu() {
 		});
 	};
 
-	return <div className={styles.menu}>{buildFirstLevel()}</div>;
+	return (
+		<nav className={styles.menu} role="navigation">
+			{buildFirstLevel()}
+		</nav>
+	);
 }

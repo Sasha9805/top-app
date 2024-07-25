@@ -69,6 +69,16 @@ export const Rating = forwardRef(
 							ref={(r) => {
 								ratingArrayRef.current[i] = r;
 							}}
+							role={isEditable ? "slider" : ""}
+							aria-valuenow={rating}
+							aria-valuemin={1}
+							aria-valuemax={5}
+							aria-label={
+								isEditable
+									? "Укажите рейтинг"
+									: "рейтинг " + rating
+							}
+							aria-invalid={error ? true : false}
 						>
 							<StarIcon />
 						</span>
@@ -125,7 +135,9 @@ export const Rating = forwardRef(
 					<span key={i}>{r}</span>
 				))}
 				{error && (
-					<span className={styles.errorMessage}>{error.message}</span>
+					<span role="alert" className={styles.errorMessage}>
+						{error.message}
+					</span>
 				)}
 			</div>
 		);

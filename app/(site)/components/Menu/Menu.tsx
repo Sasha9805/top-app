@@ -13,7 +13,7 @@ import Link from "next/link";
 import { firstLevelMenu } from "@/helpers/helpers";
 import { getMenu } from "@/api/menu";
 import { TopLevelCategory } from "@/interfaces/page.interface";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function Menu() {
 	const pathname = usePathname();
@@ -21,6 +21,7 @@ export default function Menu() {
 	const [menuState, setMenuState] = useState<MenuItem[]>([]);
 	const [isPendingSwitching, setIsPendingSwitching] = useState(false);
 	const [announce, setAnnounce] = useState<"closed" | "opened" | undefined>();
+	const shouldReduceMotion = useReducedMotion();
 
 	const firstCategory = useMemo<TopLevelCategory | null>(() => {
 		const pathNameCategory = pathname.split("/")[1];
@@ -37,10 +38,12 @@ export default function Menu() {
 	const variants = {
 		visible: {
 			marginBottom: 20,
-			transition: {
-				when: "beforeChildren",
-				staggerChildren: 0.1,
-			},
+			transition: shouldReduceMotion
+				? {}
+				: {
+						when: "beforeChildren",
+						staggerChildren: 0.1,
+				  },
 		},
 		hidden: {
 			marginBottom: 0,
@@ -53,7 +56,7 @@ export default function Menu() {
 			height: "auto",
 		},
 		hidden: {
-			opacity: 0,
+			opacity: shouldReduceMotion ? 1 : 0,
 			height: 0,
 		},
 	};

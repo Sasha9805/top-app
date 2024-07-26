@@ -26,6 +26,7 @@
 
 .secondLevel {
 	margin-bottom: 10px;
+	cursor: pointer;
 	text-transform: uppercase;
 	color: var(--gray-dark);
 	font-size: 12px;

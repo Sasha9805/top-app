@@ -4,10 +4,34 @@ import { getProducts } from "@/api/products";
 import { firstLevelMenu } from "@/helpers/helpers";
 import { notFound } from "next/navigation";
 import { TopPageComponent } from "./components/TopPageComponent/TopPageComponent";
+import { Metadata } from "next";
 
 interface IPath {
 	type: string;
 	alias: string;
+}
+
+export async function generateMetadata({
+	params,
+}: {
+	params: { alias: string; type: string };
+}): Promise<Metadata> {
+	const page = await getPage(params.alias);
+	return {
+		title: page?.metaTitle,
+		description: page?.metaDescription,
+		openGraph: {
+			title: page?.metaTitle,
+			description: page?.metaDescription,
+			type: "article",
+			url:
+				process.env.NEXT_PUBLIC_DOMAIN +
+				"/" +
+				params.type +
+				"/" +
+				params.alias,
+		},
+	};
 }
 
 export async function generateStaticParams() {
